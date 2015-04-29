@@ -6,29 +6,47 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+import android.content.Intent;
+import java.util.HashMap;
 
 
 public class MainActivity extends ActionBarActivity {
 
-    public String[] topics = {"Math", "Physics", "Marvel Super Heroes"};
+    HashMap<String, String> topics;
     private ListView list;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        topics.put("Math", "This quiz contains questions about Mathematics");
+        topics.put("Physics","This quiz contains questions about physics");
+        topics.put("Marvel Super Heroes", "This quiz contains questions regarding the Marvel Super Heroes");
+
+        intent = new Intent(this, TopicDesc.class);
+
         list = (ListView) findViewById(R.id.list);
 
-        ArrayAdapter<String> items = new ArrayAdapter<String>(this, R.layout.topic_list_item, topics);
+        String[] topicNames = topics.keySet().toArray(new String[topics.keySet().size()]);
+
+        ArrayAdapter<String> items = new ArrayAdapter<String>(this, R.layout.topic_list_item, topicNames);
         list.setAdapter(items);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                TextView t = (TextView) view;
+                String chosen = t.getText().toString();
+                intent.putExtra("topic", chosen);
+                intent.putExtra("desc", topics.get(chosen));
+                intent.putExtra("num", 1);
+                startActivity(intent);
             }
         });
+
     }
 
 
