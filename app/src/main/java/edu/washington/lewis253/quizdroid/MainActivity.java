@@ -4,14 +4,31 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.*;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    public String[] topics = {"Math", "Physics", "Marvel Super Heroes"};
+    private ListView list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        list = (ListView) findViewById(R.id.list);
+
+        ArrayAdapter<String> items = new ArrayAdapter<String>(this, R.layout.topic_list_item, topics);
+        list.setAdapter(items);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
     }
 
 
