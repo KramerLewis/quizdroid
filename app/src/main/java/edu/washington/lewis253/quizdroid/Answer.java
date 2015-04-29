@@ -38,7 +38,8 @@ public class Answer extends ActionBarActivity {
         intent = new Intent(this, Question.class);
         intent.putExtra("numcorr", numcorrect);
         intent.putExtra("qnum", qnum + 1);
-        intent.putExtra("topic", getIntent().getExtras().getString("topic"));
+        String topic = getIntent().getExtras().getString("topic");
+        intent.putExtra("topic", topic);
 
         TextView anslabel = (TextView) findViewById(R.id.answer);
         anslabel.setText((CharSequence)answerText);

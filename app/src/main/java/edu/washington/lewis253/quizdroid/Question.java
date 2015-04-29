@@ -84,9 +84,8 @@ public class Question extends ActionBarActivity {
         questionLabel.setText((CharSequence)question);
 
 
-        intent = new Intent(this, Answer.class);
         intent.putExtra("correct", correct);
-        intent.putExtra("corr", answers[correct]);
+        intent.putExtra("corr", answers[correct - 1]);
 
 
 
