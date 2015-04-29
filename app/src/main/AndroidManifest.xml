@@ -20,6 +20,14 @@
             android:name=".TopicDesc"
             android:label="@string/title_activity_topic_desc" >
         </activity>
+        <activity
+            android:name=".Question"
+            android:label="@string/title_activity_question" >
+        </activity>
+        <activity
+            android:name=".Answer"
+            android:label="@string/title_activity_answer" >
+        </activity>
     </application>
 
 </manifest>

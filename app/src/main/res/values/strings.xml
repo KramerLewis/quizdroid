@@ -4,4 +4,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_topic_desc">TopicDesc</string>
+    <string name="title_activity_question">Question</string>
+    <string name="title_activity_answer">Answer</string>
 </resources>

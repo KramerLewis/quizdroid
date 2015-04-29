@@ -21,7 +21,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        topics = new HashMap<String, String>();
         topics.put("Math", "This quiz contains questions about Mathematics");
         topics.put("Physics","This quiz contains questions about physics");
         topics.put("Marvel Super Heroes", "This quiz contains questions regarding the Marvel Super Heroes");
@@ -42,7 +42,7 @@ public class MainActivity extends ActionBarActivity {
                 String chosen = t.getText().toString();
                 intent.putExtra("topic", chosen);
                 intent.putExtra("desc", topics.get(chosen));
-                intent.putExtra("num", 1);
+                intent.putExtra("num", 2);
                 startActivity(intent);
             }
         });

@@ -6,9 +6,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+import android.content.Intent;
 
 
 public class TopicDesc extends ActionBarActivity {
+
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,13 +27,20 @@ public class TopicDesc extends ActionBarActivity {
         TextView d = (TextView)findViewById(R.id.desc);
         d.setText((CharSequence)desc);
         TextView n = (TextView)findViewById(R.id.num);
-        n.setText((CharSequence)(""+numQues));
+        n.setText((CharSequence)("This quiz has " + "" + numQues + " questions"));
+
+        intent = new Intent(this, Question.class);
+        intent.putExtra("topic", topic);
+        intent.putExtra("qnum", 1);
+        intent.putExtra("numcorr", 0);
+
+
 
         Button begin = (Button)findViewById(R.id.begin);
         begin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(intent);
             }
         });
 
