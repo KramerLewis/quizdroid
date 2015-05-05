@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -11,12 +12,18 @@ import android.widget.TextView;
 
 public class Quiz extends ActionBarActivity {
 
+    String topic;
+    int numCorrect;
+    int qnum;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        String topic = getIntent().getExtras().getString("topic");
+        topic = getIntent().getExtras().getString("topic");
+        numCorrect = 0;
+        qnum = 1;
         String desc = getIntent().getExtras().getString("desc");
         int numQues = getIntent().getExtras().getInt("num");
 
@@ -43,6 +50,45 @@ public class Quiz extends ActionBarActivity {
 
 
     }
+
+    public void loadQuestion() {
+        FragmentManager m = getFragmentManager();
+        FragmentTransaction t = m.beginTransaction();
+
+        Bundle b = new Bundle();
+        b.putString("topic", topic);
+        b.putInt("qnum", qnum);
+
+        QuestionFragment q = new QuestionFragment();
+        q.setArguments(b);
+
+        t.replace(R.id.container, q);
+        t.commit();
+
+    }
+
+    public void loadAnswer(int ans, int corr, String answer, String correct) {
+
+        if(ans == corr) {
+            numCorrect++;
+        }
+        FragmentManager m = getFragmentManager();
+        FragmentTransaction t = m.beginTransaction();
+
+        Bundle b = new Bundle();
+        b.putString("ans", answer);
+        b.putString("corr", correct);
+        b.putInt("qnum", qnum);
+        b.putInt("numCorr", numCorrect);
+
+        AnswerFragment q = new AnswerFragment();
+        q.setArguments(b);
+
+        t.replace(R.id.container, q);
+        t.commit();
+        qnum++;
+    }
+
 
 
     @Override

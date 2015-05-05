@@ -14,83 +14,81 @@ import android.widget.TextView;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TopicDescription.OnFragmentInteractionListener} interface
+ * {@link AnswerFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TopicDescription#newInstance} factory method to
+ * Use the {@link AnswerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TopicDescription extends Fragment {
+public class AnswerFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "topic";
-    private static final String ARG_PARAM2 = "desc";
-    private static final String ARG_PARAM3 = "num";
+    private static final String ARG_PARAM1 = "ans";
+    private static final String ARG_PARAM2 = "corr";
+    private static final String ARG_PARAM3 = "qnum";
+    private static final String ARG_PARAM4 = "numCorr";
 
-
-    private String topic;
-    private String desc;
-    private int numQues;
+    // TODO: Rename and change types of parameters
+    private String ans;
+    private String corr;
+    private int qnum;
+    private int numCorr;
 
     Activity hostActivity;
 
     private OnFragmentInteractionListener mListener;
 
 
-
-    public static TopicDescription newInstance(String topic, String desc, int numQues) {
-        TopicDescription fragment = new TopicDescription();
+    public static AnswerFragment newInstance(String ans, String corr, int qnum, int numCorr) {
+        AnswerFragment fragment = new AnswerFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, topic);
-        args.putString(ARG_PARAM2, desc);
-        args.putInt(ARG_PARAM3, numQues);
+        args.putString(ARG_PARAM1, ans);
+        args.putString(ARG_PARAM2, corr);
+        args.putInt(ARG_PARAM3, qnum);
+        args.putInt(ARG_PARAM4, numCorr);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public TopicDescription() {
+    public AnswerFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
-            topic = getArguments().getString(ARG_PARAM1);
-            desc = getArguments().getString(ARG_PARAM2);
-            numQues = getArguments().getInt(ARG_PARAM3);
+            ans = getArguments().getString(ARG_PARAM1);
+            corr = getArguments().getString(ARG_PARAM2);
+            qnum = getArguments().getInt(ARG_PARAM3);
+            numCorr = getArguments().getInt(ARG_PARAM4);
         }
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_topic_description, container, false);
+        View v = inflater.inflate(R.layout.fragment_answer, container, false);
 
-        TextView text = (TextView)v.findViewById(R.id.topic);
-        text.setText((CharSequence)topic);
-        TextView description = (TextView)v.findViewById(R.id.desc);
-        description.setText((CharSequence)desc);
-        TextView n = (TextView)v.findViewById(R.id.num);
-        n.setText((CharSequence)("This quiz has " + "" + numQues + " questions"));
+        TextView anslabel = (TextView) v.findViewById(R.id.answer);
+        anslabel.setText((CharSequence)ans);
+        TextView corrlabel = (TextView) v.findViewById(R.id.correct);
+        corrlabel.setText((CharSequence)corr);
+        TextView numcorr = (TextView) v.findViewById(R.id.numcorr);
+        numcorr.setText((CharSequence)(""+numCorr+" out of " + qnum));
 
-
-
-        Button begin = (Button)v.findViewById(R.id.begin);
-        begin.setOnClickListener(new View.OnClickListener() {
+        Button next = (Button) v.findViewById(R.id.next);
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //load question fragment
                 if(hostActivity instanceof Quiz) {
                     ((Quiz)hostActivity).loadQuestion();
                 }
             }
         });
 
-
         return v;
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -103,9 +101,8 @@ public class TopicDescription extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        this.hostActivity = activity;
+        hostActivity = activity;
     }
-
 
     @Override
     public void onDetach() {

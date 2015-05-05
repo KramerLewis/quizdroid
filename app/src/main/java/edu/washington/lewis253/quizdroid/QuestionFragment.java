@@ -7,6 +7,10 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.TextView;
+import android.util.Log;
 
 
 /**
@@ -22,23 +26,29 @@ public class QuestionFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "topic";
     private static final String ARG_PARAM2 = "qnum";
-    private static final String ARG_PARAM3 = "numcorr";
 
     // TODO: Rename and change types of parameters
     private String topic;
     private int qnum;
-    private int numcorr;
 
     Activity hostActivity;
 
     private OnFragmentInteractionListener mListener;
 
-    public static QuestionFragment newInstance(String topic, int qnum, int numcorr) {
+
+    String question;
+    String[] answers;
+    int correct;
+    RadioButton r1;
+    RadioButton r2;
+    RadioButton r3;
+    RadioButton r4;
+
+    public static QuestionFragment newInstance(String topic, int qnum) {
         QuestionFragment fragment = new QuestionFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, topic);
         args.putInt(ARG_PARAM2, qnum);
-        args.putInt(ARG_PARAM3, numcorr);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,7 +63,6 @@ public class QuestionFragment extends Fragment {
         if (getArguments() != null) {
             topic = getArguments().getString(ARG_PARAM1);
             qnum = getArguments().getInt(ARG_PARAM2);
-            numcorr = getArguments().getInt(ARG_PARAM3);
         }
     }
 
@@ -63,7 +72,83 @@ public class QuestionFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_question, container, false);
 
-        
+
+        switch (qnum) {
+            case 1:
+                switch (topic) {
+                    case "Math":
+                        question = "What is 1 + 1?";
+                        answers = new String[]{"1", "11", "0", "2"};
+                        correct = 4;
+                        break;
+                    case "Physics":
+                        question = "If you drop a baseball from the standing position, which direction does it go?";
+                        answers = new String[]{"up", "down", "left", "right"};
+                        correct = 2;
+                        break;
+                    case "Marvel Super Heroes":
+                        question = "Who is the superhero that can run super fast?";
+                        answers = new String[]{"Batman", "Spiderman", "Flash", "The Green Lantern"};
+                        correct = 3;
+                        break;
+
+                }
+                break;
+            case 2:
+                switch (topic) {
+                    case "Math":
+                        question = "What is 2 + 2?";
+                        answers = new String[]{"2", "22", "0", "4"};
+                        correct = 4;
+                        break;
+                    case "Physics":
+                        question = "If you throw a baseball from the standing position, which direction does it go?";
+                        answers = new String[]{"up", "down", "horizontal", "nowhere"};
+                        correct = 3;
+                        break;
+                    case "Marvel Super Heroes":
+                        question = "Who is the superhero that can fly?";
+                        answers = new String[]{"Batman", "Spiderman", "Flash", "Superman"};
+                        correct = 4;
+                        break;
+
+                }
+                break;
+
+        }
+
+        TextView questionLabel = (TextView) v.findViewById(R.id.question);
+        questionLabel.setText((CharSequence)question);
+
+        r1 = (RadioButton) v.findViewById(R.id.ans1);
+        r2 = (RadioButton) v.findViewById(R.id.ans2);
+        r3 = (RadioButton) v.findViewById(R.id.ans3);
+        r4 = (RadioButton) v.findViewById(R.id.ans4);
+
+
+        r1.setText((CharSequence)answers[0]);
+        r2.setText((CharSequence)answers[1]);
+        r3.setText((CharSequence)answers[2]);
+        r4.setText((CharSequence)answers[3]);
+
+        Button submit = (Button) v.findViewById(R.id.submit);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(hostActivity instanceof Quiz) {
+                    if (r1.isChecked()) {
+                        ((Quiz)hostActivity).loadAnswer(1, correct, answers[0], answers[correct - 1]);
+                    } else if (r2.isChecked()) {
+                        ((Quiz)hostActivity).loadAnswer(2, correct, answers[1], answers[correct - 1]);
+                    } else if(r3.isChecked()) {
+                        ((Quiz)hostActivity).loadAnswer(3, correct, answers[2], answers[correct - 1]);
+                    } else if(r4.isChecked()) {
+                        ((Quiz)hostActivity).loadAnswer(4, correct, answers[3], answers[correct - 1]);
+                    }
+                }
+            }
+        });
+
         return v;
     }
 
