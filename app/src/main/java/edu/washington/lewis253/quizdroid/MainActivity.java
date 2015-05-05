@@ -26,7 +26,7 @@ public class MainActivity extends ActionBarActivity {
         topics.put("Physics","This quiz contains questions about physics");
         topics.put("Marvel Super Heroes", "This quiz contains questions regarding the Marvel Super Heroes");
 
-        intent = new Intent(this, TopicDesc.class);
+        intent = new Intent(this, Quiz.class);
 
         list = (ListView) findViewById(R.id.list);
 

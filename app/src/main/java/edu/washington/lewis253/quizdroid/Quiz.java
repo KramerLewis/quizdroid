@@ -1,50 +1,46 @@
 package edu.washington.lewis253.quizdroid;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.*;
-import android.content.Intent;
+import android.widget.TextView;
 
 
-public class TopicDesc extends ActionBarActivity {
-
-    Intent intent;
+public class Quiz extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_topic_desc);
+        setContentView(R.layout.activity_quiz);
 
         String topic = getIntent().getExtras().getString("topic");
         String desc = getIntent().getExtras().getString("desc");
         int numQues = getIntent().getExtras().getInt("num");
 
-        TextView t = (TextView)findViewById(R.id.topic);
-        t.setText((CharSequence)topic);
-        TextView d = (TextView)findViewById(R.id.desc);
-        d.setText((CharSequence)desc);
-        TextView n = (TextView)findViewById(R.id.num);
-        n.setText((CharSequence)("This quiz has " + "" + numQues + " questions"));
 
 
-        // put these into the next fragment ******************
-        intent = new Intent(this, Question.class);
-        intent.putExtra("topic", topic);
-        intent.putExtra("qnum", 1);
-        intent.putExtra("numcorr", 0);
+        if (savedInstanceState == null) {
+
+            FragmentManager m = getFragmentManager();
+            FragmentTransaction t = m.beginTransaction();
+
+            Bundle b = new Bundle();
+            b.putString("topic", topic);
+            b.putString("desc", desc);
+            b.putInt("num", numQues);
+
+            TopicDescription d = new TopicDescription();
+            d.setArguments(b);
+
+            t.add(R.id.container, d);
+            t.commit();
 
 
-        // make this load next fragment ************
-        Button begin = (Button)findViewById(R.id.begin);
-        begin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(intent);
-            }
-        });
+        }
+
 
     }
 
@@ -52,7 +48,7 @@ public class TopicDesc extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_topic_desc, menu);
+        getMenuInflater().inflate(R.menu.menu_quiz, menu);
         return true;
     }
 

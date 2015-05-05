@@ -103,6 +103,8 @@ public class Question extends ActionBarActivity {
 
         Button submit = (Button) findViewById(R.id.submit);
 
+
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
