@@ -43,6 +43,7 @@ public class Quiz extends ActionBarActivity {
             d.setArguments(b);
 
             t.add(R.id.container, d);
+            t.setTransition(1);
             t.commit();
 
 
@@ -63,6 +64,7 @@ public class Quiz extends ActionBarActivity {
         q.setArguments(b);
 
         t.replace(R.id.container, q);
+        t.setTransition(6);
         t.commit();
 
     }
@@ -85,6 +87,7 @@ public class Quiz extends ActionBarActivity {
         q.setArguments(b);
 
         t.replace(R.id.container, q);
+        t.setTransition(6);
         t.commit();
         qnum++;
     }
