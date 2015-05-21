@@ -67,7 +67,7 @@ public class Quiz extends ActionBarActivity {
         FragmentTransaction t = m.beginTransaction();
 
         Bundle b = new Bundle();
-        b.putString("topic", topic);
+        b.putString("topic", topic.title);
         b.putInt("qnum", qnum);
 
         QuestionFragment q = new QuestionFragment();
@@ -79,17 +79,17 @@ public class Quiz extends ActionBarActivity {
 
     }
 
-    public void loadAnswer(int ans, int corr, String answer, String correct) {
+    public void loadAnswer(Question question, int guess) {
 
-        if(ans == corr) {
+        if(guess == question.answer) {
             numCorrect++;
         }
         FragmentManager m = getFragmentManager();
         FragmentTransaction t = m.beginTransaction();
 
         Bundle b = new Bundle();
-        b.putString("ans", answer);
-        b.putString("corr", correct);
+        b.putString("ans", question.ans.get(guess - 1));
+        b.putString("corr", question.ans.get(question.answer));
         b.putInt("qnum", qnum);
         b.putInt("numCorr", numCorrect);
 

@@ -28,26 +28,26 @@ public class QuestionFragment extends Fragment {
     private static final String ARG_PARAM2 = "qnum";
 
     // TODO: Rename and change types of parameters
-    private String topic;
+    private String chosen;
     private int qnum;
+    private QuizApp app;
+    private Topic topic;
 
     Activity hostActivity;
 
     private OnFragmentInteractionListener mListener;
 
 
-    String question;
-    String[] answers;
-    int correct;
+    Question question;
     RadioButton r1;
     RadioButton r2;
     RadioButton r3;
     RadioButton r4;
 
-    public static QuestionFragment newInstance(String topic, int qnum) {
+    public static QuestionFragment newInstance(String chosen, int qnum) {
         QuestionFragment fragment = new QuestionFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, topic);
+        args.putString(ARG_PARAM1, chosen);
         args.putInt(ARG_PARAM2, qnum);
         fragment.setArguments(args);
         return fragment;
@@ -61,8 +61,15 @@ public class QuestionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            topic = getArguments().getString(ARG_PARAM1);
+            app = (QuizApp) getActivity().getApplication();
+            chosen = getArguments().getString(ARG_PARAM1);
             qnum = getArguments().getInt(ARG_PARAM2);
+            for (Topic t : app.getAllTopics()) {
+                if(t.title.equals(chosen)) {
+                    topic = t;
+                    break;
+                }
+            }
         }
     }
 
@@ -72,50 +79,8 @@ public class QuestionFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_question, container, false);
 
+        question = topic.questions.get(qnum);
 
-        switch (qnum) {
-            case 1:
-                switch (topic) {
-                    case "Math":
-                        question = "What is 1 + 1?";
-                        answers = new String[]{"1", "11", "0", "2"};
-                        correct = 4;
-                        break;
-                    case "Physics":
-                        question = "If you drop a baseball from the standing position, which direction does it go?";
-                        answers = new String[]{"up", "down", "left", "right"};
-                        correct = 2;
-                        break;
-                    case "Marvel Super Heroes":
-                        question = "Who is the superhero that can run super fast?";
-                        answers = new String[]{"Batman", "Spiderman", "Flash", "The Green Lantern"};
-                        correct = 3;
-                        break;
-
-                }
-                break;
-            case 2:
-                switch (topic) {
-                    case "Math":
-                        question = "What is 2 + 2?";
-                        answers = new String[]{"2", "22", "0", "4"};
-                        correct = 4;
-                        break;
-                    case "Physics":
-                        question = "If you throw a baseball from the standing position, which direction does it go?";
-                        answers = new String[]{"up", "down", "horizontal", "nowhere"};
-                        correct = 3;
-                        break;
-                    case "Marvel Super Heroes":
-                        question = "Who is the superhero that can fly?";
-                        answers = new String[]{"Batman", "Spiderman", "Flash", "Superman"};
-                        correct = 4;
-                        break;
-
-                }
-                break;
-
-        }
 
         TextView questionLabel = (TextView) v.findViewById(R.id.question);
         questionLabel.setText((CharSequence)question);
@@ -126,10 +91,10 @@ public class QuestionFragment extends Fragment {
         r4 = (RadioButton) v.findViewById(R.id.ans4);
 
 
-        r1.setText((CharSequence)answers[0]);
-        r2.setText((CharSequence)answers[1]);
-        r3.setText((CharSequence)answers[2]);
-        r4.setText((CharSequence)answers[3]);
+        r1.setText((CharSequence)question.ans.get(0));
+        r2.setText((CharSequence)question.ans.get(1));
+        r3.setText((CharSequence)question.ans.get(2));
+        r4.setText((CharSequence)question.ans.get(3));
 
         Button submit = (Button) v.findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -137,13 +102,13 @@ public class QuestionFragment extends Fragment {
             public void onClick(View view) {
                 if(hostActivity instanceof Quiz) {
                     if (r1.isChecked()) {
-                        ((Quiz)hostActivity).loadAnswer(1, correct, answers[0], answers[correct - 1]);
+                        ((Quiz)hostActivity).loadAnswer(question, 1);
                     } else if (r2.isChecked()) {
-                        ((Quiz)hostActivity).loadAnswer(2, correct, answers[1], answers[correct - 1]);
+                        ((Quiz)hostActivity).loadAnswer(question, 2);
                     } else if(r3.isChecked()) {
-                        ((Quiz)hostActivity).loadAnswer(3, correct, answers[2], answers[correct - 1]);
+                        ((Quiz)hostActivity).loadAnswer(question, 3);
                     } else if(r4.isChecked()) {
-                        ((Quiz)hostActivity).loadAnswer(4, correct, answers[3], answers[correct - 1]);
+                        ((Quiz)hostActivity).loadAnswer(question, 4);
                     }
                 }
             }
