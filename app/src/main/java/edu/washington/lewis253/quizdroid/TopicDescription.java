@@ -22,14 +22,14 @@ import android.widget.TextView;
 public class TopicDescription extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "topic";
-    private static final String ARG_PARAM2 = "desc";
-    private static final String ARG_PARAM3 = "num";
+    private static final String ARG_PARAM1 = "chosen";
 
 
-    private String topic;
+    private String chosen;
+    private Topic topic;
     private String desc;
     private int numQues;
+    private QuizApp app;
 
     Activity hostActivity;
 
@@ -37,12 +37,10 @@ public class TopicDescription extends Fragment {
 
 
 
-    public static TopicDescription newInstance(String topic, String desc, int numQues) {
+    public static TopicDescription newInstance(String chosen) {
         TopicDescription fragment = new TopicDescription();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, topic);
-        args.putString(ARG_PARAM2, desc);
-        args.putInt(ARG_PARAM3, numQues);
+        args.putString(ARG_PARAM1, chosen);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,10 +53,20 @@ public class TopicDescription extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
         if (getArguments() != null) {
-            topic = getArguments().getString(ARG_PARAM1);
-            desc = getArguments().getString(ARG_PARAM2);
-            numQues = getArguments().getInt(ARG_PARAM3);
+            app = (QuizApp) getActivity().getApplication();
+
+            chosen = getArguments().getString(ARG_PARAM1);
+            for(Topic t : app.getAllTopics()) {
+                if(t.title.equals(chosen)) {
+                    topic = t;
+                    break;
+                }
+            }
+            desc = topic.desc;
+            numQues = topic.questions.size();
         }
 
     }
@@ -70,7 +78,7 @@ public class TopicDescription extends Fragment {
         View v = inflater.inflate(R.layout.fragment_topic_description, container, false);
 
         TextView text = (TextView)v.findViewById(R.id.topic);
-        text.setText((CharSequence)topic);
+        text.setText((CharSequence)chosen);
         TextView description = (TextView)v.findViewById(R.id.desc);
         description.setText((CharSequence)desc);
         TextView n = (TextView)v.findViewById(R.id.num);

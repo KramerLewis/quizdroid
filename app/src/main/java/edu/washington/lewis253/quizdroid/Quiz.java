@@ -12,20 +12,32 @@ import android.widget.TextView;
 
 public class Quiz extends ActionBarActivity {
 
-    String topic;
+    Topic topic;
     int numCorrect;
     int qnum;
+    QuizApp app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        topic = getIntent().getExtras().getString("topic");
+        app = (QuizApp) getApplication();
+
+
+        String chosen = getIntent().getExtras().getString("topic");
+        for(Topic t : app.topics) {
+            if(t.title.equals(chosen)) {
+                topic = t;
+                break;
+            }
+        }
         numCorrect = 0;
         qnum = 1;
-        String desc = getIntent().getExtras().getString("desc");
-        int numQues = getIntent().getExtras().getInt("num");
+        String desc = topic.desc;
+        int numQues = topic.questions.size();
+        //String desc = getIntent().getExtras().getString("desc");
+        //int numQues = getIntent().getExtras().getInt("num");
 
 
 
@@ -35,9 +47,7 @@ public class Quiz extends ActionBarActivity {
             FragmentTransaction t = m.beginTransaction();
 
             Bundle b = new Bundle();
-            b.putString("topic", topic);
-            b.putString("desc", desc);
-            b.putInt("num", numQues);
+            b.putString("topic", chosen);
 
             TopicDescription d = new TopicDescription();
             d.setArguments(b);
