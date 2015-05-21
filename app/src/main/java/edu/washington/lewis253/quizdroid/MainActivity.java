@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.*;
 import android.content.Intent;
 import java.util.*;
+import android.content.SharedPreferences;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -20,6 +21,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         QuizApp app = (QuizApp) getApplication();
         topics = app.getAllTopics();
@@ -88,6 +90,8 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent i = new Intent(this, Preferences.class);
+            startActivity(i);
             return true;
         }
 

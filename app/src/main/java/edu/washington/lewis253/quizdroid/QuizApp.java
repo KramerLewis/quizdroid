@@ -1,10 +1,12 @@
 package edu.washington.lewis253.quizdroid;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import org.json.*;
 
 import java.util.*;
 import java.io.*;
+import android.content.SharedPreferences;
 
 
 /**
@@ -44,6 +46,7 @@ public class QuizApp extends android.app.Application implements TopicRepository 
     private static QuizApp myApp = null;
     List<Question> questions;
     List<Topic> topics;
+    SharedPreferences prefs;
 
 
     public QuizApp() {
@@ -60,6 +63,11 @@ public class QuizApp extends android.app.Application implements TopicRepository 
 
         super.onCreate();
         Log.i("QuizApp", "onCreate() fired, quizapp");
+
+        prefs = getSharedPreferences("prefs.xml", 0);
+        //set background task based on preferences.
+        FetchQuiz fetch = new FetchQuiz();
+        fetch.onStartComman
 
         questions = new ArrayList<Question>();
         topics = new ArrayList<Topic>();

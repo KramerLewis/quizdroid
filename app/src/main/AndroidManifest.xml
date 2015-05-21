@@ -3,6 +3,7 @@
     package="edu.washington.lewis253.quizdroid" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".QuizApp"
         android:allowBackup="true"
@@ -22,6 +23,16 @@
             android:name=".Quiz"
             android:label="@string/title_activity_quiz" >
         </activity>
+        <activity
+            android:name=".Preferences"
+            android:label="@string/title_activity_preferences" >
+        </activity>
+
+        <service
+            android:name=".FetchQuiz"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
 </manifest>
