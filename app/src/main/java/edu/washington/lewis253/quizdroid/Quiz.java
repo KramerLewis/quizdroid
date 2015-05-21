@@ -47,7 +47,7 @@ public class Quiz extends ActionBarActivity {
             FragmentTransaction t = m.beginTransaction();
 
             Bundle b = new Bundle();
-            b.putString("topic", chosen);
+            b.putString("chosen", chosen);
 
             TopicDescription d = new TopicDescription();
             d.setArguments(b);
@@ -89,7 +89,7 @@ public class Quiz extends ActionBarActivity {
 
         Bundle b = new Bundle();
         b.putString("ans", question.ans.get(guess - 1));
-        b.putString("corr", question.ans.get(question.answer));
+        b.putString("corr", question.ans.get(question.answer - 1));
         b.putInt("qnum", qnum);
         b.putInt("numCorr", numCorrect);
 

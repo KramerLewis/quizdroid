@@ -79,11 +79,11 @@ public class QuestionFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_question, container, false);
 
-        question = topic.questions.get(qnum);
+        question = topic.questions.get(qnum - 1);
 
 
         TextView questionLabel = (TextView) v.findViewById(R.id.question);
-        questionLabel.setText((CharSequence)question);
+        questionLabel.setText((CharSequence)question.ques);
 
         r1 = (RadioButton) v.findViewById(R.id.ans1);
         r2 = (RadioButton) v.findViewById(R.id.ans2);

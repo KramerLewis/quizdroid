@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
+import android.util.Log;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,9 +58,12 @@ public class TopicDescription extends Fragment {
         if (getArguments() != null) {
             app = (QuizApp) getActivity().getApplication();
 
+
             chosen = getArguments().getString(ARG_PARAM1);
             for(Topic t : app.getAllTopics()) {
-                if(t.title.equals(chosen)) {
+                Log.i("TopicDesc", chosen + " : " + t.title);
+                if(t.title.equalsIgnoreCase(chosen)) {
+                    Log.i("TopicDescription", "inifstatement");
                     topic = t;
                     break;
                 }
